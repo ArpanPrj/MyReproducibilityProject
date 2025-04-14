@@ -7,7 +7,7 @@ This repository contains the complete pipeline and associated scripts for RNA-se
 
 - [Trimming of raw reads and post trim quality check](2_cleanTrimmomatic_QualityFastQC.sh)
 
-- [Alignment to reference genome and transcript quantification](3_mapper_hista2.sh)
+- [Alignment to reference genome and transcript quantification](3_mapper_hisat2.sh)
 
 - Differential expression analysis
 
