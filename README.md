@@ -7,9 +7,7 @@ This repository contains the complete pipeline and associated scripts for RNA-se
 
 - [Trimming of raw reads and post trim quality check](2_cleanTrimmomatic_QualityFastQC.sh)
 
-- Alignment to reference genome
-
-- Transcript quantification
+- [Alignment to reference genome and transcript quantification](3_mapper_hista2.sh)
 
 - Differential expression analysis
 
@@ -28,3 +26,11 @@ This part of the RNA-seq pipeline focuses on improving the quality of raw sequen
 
 Following trimming, FastQC is used to assess the quality of the cleaned reads. This ensures that the trimming process was effective and that the data is suitable for accurate downstream analysis. The FastQC results are compiled into an archive file, making it easy to transfer and review quality metrics such as per-base quality scores, adapter contamination, and sequence length distribution.
 
+## Alignment to reference genome and transcript quantification
+This stage of the RNA-seq analysis pipeline involves aligning cleaned sequencing reads to a reference genome and quantifying gene and transcript expression levels using a combination of established bioinformatics tools.
+
+The process begins with the preparation of the reference genome and its annotation using gffread, which converts the annotation file into a format compatible with downstream tools. The reference genome is then indexed with HISAT2, a fast and sensitive splice-aware aligner designed specifically for RNA-seq data. Cleaned paired-end reads are mapped to this indexed genome using HISAT2, allowing for accurate alignment across exon-exon junctions.
+
+Post-alignment, SAMtools is used to convert, sort, and index the resulting alignment files, as well as to generate basic mapping statistics. These alignments are then passed to StringTie, a transcript assembler and quantification tool, which calculates expression levels using a reference-guided approach. StringTie outputs are structured in a way that is compatible with downstream visualization and statistical tools.
+
+Finally, prepDE.py, a utility script provided by the StringTie suite, is used to compile all individual expression estimates into two comprehensive count matrices: one at the gene level and one at the transcript level. These matrices are essential inputs for differential expression analysis in tools such as DESeq2, edgeR, or Ballgown.
