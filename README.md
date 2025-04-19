@@ -1,47 +1,97 @@
 # RNA-Seq Data Analysis Project
 
-This repository contains the complete pipeline and associated scripts for RNA-seq data analysis performed as part of a research project investigating transcriptional changes in *Fusarium* species in response to host-specific biological extracts. The workflow spans from raw sequencing data preprocessing to differential gene expression analysis and downstream functional annotation.
+This repository contains a complete and reproducible pipeline for RNA-seq analysis aimed at understanding transcriptional responses in *Fusarium* species when treated with host-derived biological extracts. Specifically, this study investigates two fungal pathogens:
 
-The project is divided into two independent branches of analysis:
+- *Fusarium cucurbiticola* exposed to zucchini extract
+- *Fusarium bataticola* exposed to sweet potato extract
 
-- *Fusarium cucurbiticola* treated with zucchini extract  
-- *Fusarium bataticola* treated with sweet potato extract  
-
-All code and outputs are organized in two subdirectories: `Fusarium_cucurbiticola` and `Fusarium_bataticola`, each containing a complete pipeline.
+All scripts and output files are organized into separate folders: `Fusarium_cucurbiticola/` and `Fusarium_bataticola/`, ensuring clear separation of analyses for the two species.
 
 ---
 
-## Key Steps in the Workflow
+## Overview of the RNA-Seq Pipeline
 
-- Data retrieval and quality assessment  
-- Trimming of raw reads and post-trim quality check  
-- Alignment to reference genome and transcript quantification  
-- Differential expression analysis  
-- Functional enrichment and visualization  
+Each species-specific workflow follows these key steps:
 
-Each step is documented through version-controlled scripts to ensure reproducibility and transparency.
+### 1. Data Retrieval and Initial Quality Assessment
+
+**Goal:** Obtain RNA-seq data and evaluate raw read quality.
+
+- RNA-seq datasets are downloaded directly from the NCBI SRA using the **SRA Toolkit**.
+- Each sample is retrieved in paired-end format and automatically split into forward and reverse reads.
+- **FastQC** is then used to assess the quality of the raw reads, checking metrics such as:
+  - Per-base sequence quality
+  - Adapter content
+  - Sequence duplication levels
+  - GC content
+- Quality reports are archived for easy visualization and transfer.
+
+📄 Scripts:
+- [`Fusarium_cucurbiticola/0_1_download_QualityCheck.sh`](./Fusarium_cucurbiticola/0_1_download_QualityCheck.sh)  
+- [`Fusarium_bataticola/0_1_download_QualityCheck.sh`](./Fusarium_bataticola/0_1_download_QualityCheck.sh)
 
 ---
 
-## Folder Structure and Script Links
+### 2. Adapter Trimming and Post-Trim Quality Control
 
-### Fusarium cucurbiticola
+**Goal:** Remove low-quality regions and sequencing adapters.
 
-Directory: [`Fusarium_cucurbiticola`](./Fusarium_cucurbiticola)
+- **Trimmomatic** is used to:
+  - Remove Illumina adapters
+  - Trim low-quality bases from ends
+  - Discard reads below a minimum length threshold
+- Cleaned paired and unpaired reads are generated.
+- Post-trim **FastQC** reports are produced to confirm read quality improvement.
 
-- [0_1_download_QualityCheck.sh](./Fusarium_cucurbiticola/0_1_download_QualityCheck.sh): Download RNA-seq data and perform initial quality check using FastQC  
-- [2_cleanTrimmomatic_QualityFastQC.sh](./Fusarium_cucurbiticola/2_cleanTrimmomatic_QualityFastQC.sh): Trim raw reads with Trimmomatic and perform post-trim QC  
-- [3_mapper_hisat2.sh](./Fusarium_cucurbiticola/3_mapper_hisat2.sh): Align reads to reference genome using HISAT2 and quantify transcripts with StringTie  
+📄 Scripts:
+- [`Fusarium_cucurbiticola/2_cleanTrimmomatic_QualityFastQC.sh`](./Fusarium_cucurbiticola/2_cleanTrimmomatic_QualityFastQC.sh)  
+- [`Fusarium_bataticola/2_cleanTrimmomatic_QualityFastQC.sh`](./Fusarium_bataticola/2_cleanTrimmomatic_QualityFastQC.sh)
 
 ---
 
-### Fusarium bataticola
+### 3. Read Alignment and Transcript Quantification
 
-Directory: [`Fusarium_bataticola`](./Fusarium_bataticola)
+**Goal:** Map RNA-seq reads to the genome and quantify expression.
 
-- [0_1_download_QualityCheck.sh](./Fusarium_bataticola/0_1_download_QualityCheck.sh): Download RNA-seq data and perform initial quality check using FastQC  
-- [2_cleanTrimmomatic_QualityFastQC.sh](./Fusarium_bataticola/2_cleanTrimmomatic_QualityFastQC.sh): Trim raw reads with Trimmomatic and perform post-trim QC  
-- [3_mapper_hisat2.sh](./Fusarium_bataticola/3_mapper_hisat2.sh): Align reads to reference genome using HISAT2 and quantify transcripts with StringTie  
+- The reference genome is preprocessed using **gffread** to format GTF annotations.
+- The genome is indexed using **HISAT2**, which supports spliced alignment across exon-exon junctions.
+- Cleaned reads are aligned to the reference genome using HISAT2.
+- The resulting SAM files are:
+  - Converted to BAM
+  - Sorted and indexed using **SAMtools**
+- **StringTie** assembles transcripts and quantifies expression levels in a reference-guided manner.
+- The **prepDE.py** utility is used to compile gene- and transcript-level count matrices for DE analysis.
+
+📄 Scripts:
+- [`Fusarium_cucurbiticola/3_mapper_hisat2.sh`](./Fusarium_cucurbiticola/3_mapper_hisat2.sh)  
+- [`Fusarium_bataticola/3_mapper_hisat2.sh`](./Fusarium_bataticola/3_mapper_hisat2.sh)
+
+---
+
+### 4. Differential Expression Analysis
+
+**Goal:** Identify genes with significant expression changes in response to treatment.
+
+- Gene-level count matrices generated by StringTie are processed using **DESeq2** in R.
+- The analysis includes:
+  - Normalization of raw counts
+  - Statistical testing to identify differentially expressed genes (DEGs)
+  - Visualization via MA plots and volcano plots
+- DEGs are filtered based on log2 fold-change and adjusted p-value cutoffs.
+
+📄 Scripts: (To be added)
+
+---
+
+### 5. Functional Enrichment and Visualization
+
+**Goal:** Understand biological significance of differentially expressed genes.
+
+- Functional enrichment analysis (e.g., GO, KEGG) is conducted using R packages such as `clusterProfiler`.
+- Enriched terms are visualized using dot plots, barplots, and pathway diagrams.
+- Outputs help interpret fungal response to host extracts at the systems level.
+
+📄 Scripts: (To be added)
 
 ---
 
