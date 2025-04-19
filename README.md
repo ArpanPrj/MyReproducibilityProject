@@ -1,130 +1,121 @@
-# RNA-Seq Data Analysis Project
+#  RNA-Seq Data Analysis Project
 
-This repository contains a complete and reproducible pipeline for RNA-seq analysis aimed at understanding transcriptional responses in *Fusarium* species when treated with host-derived biological extracts. Specifically, this study investigates two fungal pathogens:
+Welcome to the RNA-seq analysis pipeline designed to unravel how *Fusarium* species tweak their gene expression when they encounter host-derived biological extracts. This study dives into two specific fungal pathogens:
 
-- *Fusarium cucurbiticola* exposed to zucchini extract
-- *Fusarium bataticola* exposed to sweet potato extract
+- *Fusarium cucurbiticola*, treated with zucchini extract  
+- *Fusarium bataticola*, treated with sweet potato extract
 
-All scripts and output files are organized into separate folders: `Fusarium_cucurbiticola/` and `Fusarium_bataticola/`, ensuring clear separation of analyses for the two species.
+Each fungus gets its own little sandbox — the entire analysis is neatly compartmentalized into two separate folders: `Fusarium_cucurbiticola/` and `Fusarium_bataticola/`, so there's no cross-contamination or confusion.
 
 ---
 
-## Overview of the RNA-Seq Pipeline
+## Workflow Overview
 
-Each species-specific workflow follows these key steps:
+This RNA-seq pipeline is built as a stepwise, reproducible, and modular structure — from raw read downloads all the way to functional interpretations of differentially expressed genes.
 
-### 1. Data Retrieval and Initial Quality Assessment
+---
 
-**Goal:** Obtain RNA-seq data and evaluate raw read quality.
+### Data Retrieval and Quality Check
 
-- RNA-seq datasets are downloaded directly from the NCBI SRA using the **SRA Toolkit**.
-- Each sample is retrieved in paired-end format and automatically split into forward and reverse reads.
-- **FastQC** is then used to assess the quality of the raw reads, checking metrics such as:
-  - Per-base sequence quality
-  - Adapter content
-  - Sequence duplication levels
-  - GC content
-- Quality reports are archived for easy visualization and transfer.
+We begin by getting our hands on some raw data. Using the **SRA Toolkit (v3.0.0)**, we pull down paired-end RNA-seq reads directly from the NCBI SRA. The reads are automatically split into forward and reverse files for easy handling.
 
-📄 Scripts:
+Next up, we run **FastQC (v0.11.9)**, which acts like a preliminary health check for your reads. It tells us about:
+- Base-wise quality scores
+- Presence of adapter sequences
+- Sequence duplication
+- GC content quirks
+
+All FastQC reports are stored and can be viewed later to see how good (or bad) your raw data looks.
+
+Scripts:
 - [`Fusarium_cucurbiticola/0_1_download_QualityCheck.sh`](./Fusarium_cucurbiticola/0_1_download_QualityCheck.sh)  
 - [`Fusarium_bataticola/0_1_download_QualityCheck.sh`](./Fusarium_bataticola/0_1_download_QualityCheck.sh)
 
 ---
 
-### 2. Adapter Trimming and Post-Trim Quality Control
+### Adapter Trimming and Post-Trim QC
 
-**Goal:** Remove low-quality regions and sequencing adapters.
+Once we know what's wrong with the raw reads, we clean them up using **Trimmomatic (v0.39)**. It clips off the pesky Illumina adapter sequences, shaves off low-quality ends, and kicks out reads that are too short to be useful.
 
-- **Trimmomatic** is used to:
-  - Remove Illumina adapters
-  - Trim low-quality bases from ends
-  - Discard reads below a minimum length threshold
-- Cleaned paired and unpaired reads are generated.
-- Post-trim **FastQC** reports are produced to confirm read quality improvement.
+We then rerun **FastQC** on these trimmed reads to confirm that we've improved things. If the reports look greener, we move on with confidence.
 
-📄 Scripts:
+Scripts:
 - [`Fusarium_cucurbiticola/2_cleanTrimmomatic_QualityFastQC.sh`](./Fusarium_cucurbiticola/2_cleanTrimmomatic_QualityFastQC.sh)  
 - [`Fusarium_bataticola/2_cleanTrimmomatic_QualityFastQC.sh`](./Fusarium_bataticola/2_cleanTrimmomatic_QualityFastQC.sh)
 
 ---
 
-### 3. Read Alignment and Transcript Quantification
+### Read Mapping and Expression Quantification
 
-**Goal:** Map RNA-seq reads to the genome and quantify expression.
+Now the fun begins — we align the clean reads to their respective reference genomes. Here's how this step unfolds:
 
-- The reference genome is preprocessed using **gffread** to format GTF annotations.
-- The genome is indexed using **HISAT2**, which supports spliced alignment across exon-exon junctions.
-- Cleaned reads are aligned to the reference genome using HISAT2.
-- The resulting SAM files are:
-  - Converted to BAM
-  - Sorted and indexed using **SAMtools**
-- **StringTie** assembles transcripts and quantifies expression levels in a reference-guided manner.
-- The **prepDE.py** utility is used to compile gene- and transcript-level count matrices for DE analysis.
+- We first process the GFF/GTF annotation files using **gffread (v0.12.7)** to make sure they play nicely with downstream tools.
+- The reference genome is indexed using **HISAT2 (v2.2.1)** — a spliced aligner that smartly handles reads spanning exon-exon junctions.
+- Reads are aligned to the genome, producing SAM files, which are promptly converted to sorted and indexed BAMs using **SAMtools (v1.15.1)**.
+- Then comes **StringTie (v2.2.1)**, which assembles transcripts and estimates expression levels. It works in a reference-guided mode, keeping things tidy and biologically accurate.
+- Finally, we use the **prepDE.py** script bundled with StringTie to extract gene- and transcript-level count matrices — all ready for DE analysis.
 
-📄 Scripts:
+Scripts:
 - [`Fusarium_cucurbiticola/3_mapper_hisat2.sh`](./Fusarium_cucurbiticola/3_mapper_hisat2.sh)  
 - [`Fusarium_bataticola/3_mapper_hisat2.sh`](./Fusarium_bataticola/3_mapper_hisat2.sh)
 
 ---
 
-### 4. Differential Expression Analysis
+### Differential Expression Analysis
 
-**Goal:** Identify genes with significant expression changes in response to treatment.
+With count data in hand, we jump into R to perform statistical sleuthing using **DESeq2 (v1.38.3)**. Here's what happens:
 
-- Gene-level count matrices generated by StringTie are processed using **DESeq2** in R.
-- The analysis includes:
-  - Normalization of raw counts
-  - Statistical testing to identify differentially expressed genes (DEGs)
-  - Visualization via MA plots and volcano plots
-- DEGs are filtered based on log2 fold-change and adjusted p-value cutoffs.
+- Raw counts are normalized to account for differences in library size and sequencing depth.
+- We run statistical tests to detect genes that are significantly up- or down-regulated between treatment conditions.
+- MA plots and volcano plots are generated to help visualize the expression landscape and spot key players.
+- DEGs are filtered based on log2 fold-change and adjusted p-values (because false discoveries are a party we don't want to crash).
 
-📄 Scripts: (To be added)
+Scripts: *Coming soon*
 
 ---
 
-### 5. Functional Enrichment and Visualization
+### Functional Enrichment and Biological Insights
 
-**Goal:** Understand biological significance of differentially expressed genes.
+We wrap up the analysis by asking the all-important question: **What do these DEGs actually do?**
 
-- Functional enrichment analysis (e.g., GO, KEGG) is conducted using R packages such as `clusterProfiler`.
-- Enriched terms are visualized using dot plots, barplots, and pathway diagrams.
-- Outputs help interpret fungal response to host extracts at the systems level.
+Using R packages like `clusterProfiler`, we run GO and KEGG enrichment analysis to identify overrepresented functions and pathways.
 
-📄 Scripts: (To be added)
+These results are visualized using dot plots, barplots, and curated pathway diagrams, giving us a systems-level understanding of how the fungi respond to their host extracts.
+
+Scripts: *Coming soon*
 
 ---
 
 ## Software and Dependencies
 
-The analysis pipeline was developed and tested using the following tools and versions:
+Everything in this pipeline was run on a Unix-based HPC setup. Here’s the toolkit used and their respective versions:
 
 | Tool         | Version  | Description |
 |--------------|----------|-------------|
-| SRA Toolkit  | 3.0.0    | Downloading raw RNA-seq data from NCBI SRA |
-| FastQC       | 0.11.9   | Quality check of raw and trimmed reads |
-| Trimmomatic  | 0.39     | Adapter trimming and quality filtering |
-| HISAT2       | 2.2.1    | Splice-aware alignment of reads to the reference genome |
-| SAMtools     | 1.15.1   | Conversion, sorting, indexing, and stats of alignment files |
-| StringTie    | 2.2.1    | Transcript assembly and expression quantification |
-| prepDE.py    | (from StringTie 2.2.1) | Generation of count matrices for differential expression |
-| gffread      | 0.12.7   | GFF/GTF conversion for StringTie compatibility |
-| DESeq2       | 1.38.3   | (R package) Differential gene expression analysis |
-| R            | 4.2.2    | Statistical computing and plotting |
-| Python       | 3.9      | Scripting and workflow automation |
+| SRA Toolkit  | 3.0.0    | Fetch raw sequencing data from NCBI SRA |
+| FastQC       | 0.11.9   | Assess sequence quality before and after trimming |
+| Trimmomatic  | 0.39     | Remove adapters and low-quality reads |
+| HISAT2       | 2.2.1    | Splice-aware aligner for RNA-seq reads |
+| SAMtools     | 1.15.1   | BAM/SAM manipulation toolkit |
+| StringTie    | 2.2.1    | Transcript assembler and quantifier |
+| prepDE.py    | bundled with StringTie | Generates count matrices for DESeq2 |
+| gffread      | 0.12.7   | Annotation fixer and converter |
+| DESeq2       | 1.38.3   | Differential gene expression analysis |
+| R            | 4.2.2    | Statistical computing and visualization |
+| Python       | 3.9      | Used for scripting various steps |
 
-> All tools were run on a Unix-based high-performance computing environment.
+> Tip: Most tools can be installed via `conda` or built from source.
 
 ---
 
 ## Notes
 
-- The `prepDE.py` script from the StringTie suite is used to generate count matrices for DE analysis  
-- All tools can be installed via `conda`, `apt`, or compiled from source  
-- The project adheres to FAIR data principles for bioinformatics workflows  
+- The project is built with reproducibility in mind, adhering to FAIR principles.
+- It’s modular, version-controlled, and easy to extend.
+- Each script is prefixed and named according to the step number, so they’re always in logical order.
 
 ---
 
-## Citation
+## Citation and Contact
 
-Please cite this repository if you use any part of the pipeline or code in your own work. For questions or collaboration, contact the repository maintainer.
+If this pipeline helps your research, please cite this repository in your work. For questions, bugs, or collaborations, feel free to reach out to the maintainer.
