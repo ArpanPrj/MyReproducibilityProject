@@ -142,7 +142,7 @@ plotcounts
 Save the ordered results table as a CSV file for downstream use or record-keeping.
 
 ```{r save-results}
-write.csv(as.data.frame(resOrdered), file = "DGESeq_results.csv")
+write.csv(as.data.frame(resOrdered), file = "Fusarium_cucurbiticola/DGESeq_results.csv")
 ```
 
 # Step 8: Data Transformation for Visualization

@@ -70,7 +70,10 @@ With count data in hand, we jump into R to perform statistical sleuthing using *
 - MA plots and volcano plots are generated to help visualize the expression landscape and spot key players.
 - DEGs are filtered based on log2 fold-change and adjusted p-values (because false discoveries are a party we don't want to crash).
 
-Scripts: *Coming soon*
+Scripts:
+- [`Fusarium_cucurbiticola/4_Differential_Expression_analyses.Rmd`](./Fusarium_cucurbiticola/4_Differential_Expression_analyses.Rmd)  
+
+
 
 ---
 
