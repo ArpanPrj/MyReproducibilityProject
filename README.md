@@ -72,20 +72,9 @@ With count data in hand, we jump into R to perform statistical sleuthing using *
 
 Scripts:
 - [`Fusarium_cucurbiticola/4_Differential_Expression_analyses.Rmd`](./Fusarium_cucurbiticola/4_Differential_Expression_analyses.Rmd)  
+- [`Fusarium_bataticola/4_Differential_Expression_analyses.Rmd`](./Fusarium_bataticola/4_Differential_Expression_analyses.Rmd)  
 
 
-
----
-
-### Functional Enrichment and Biological Insights
-
-We wrap up the analysis by asking the all-important question: **What do these DEGs actually do?**
-
-Using R packages like `clusterProfiler`, we run GO and KEGG enrichment analysis to identify overrepresented functions and pathways.
-
-These results are visualized using dot plots, barplots, and curated pathway diagrams, giving us a systems-level understanding of how the fungi respond to their host extracts.
-
-Scripts: *Coming soon*
 
 ---
 
