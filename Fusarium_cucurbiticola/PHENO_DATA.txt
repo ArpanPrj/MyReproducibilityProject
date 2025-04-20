@@ -1,0 +1,10 @@
+sample	treatment	type
+SRR10229797	treated	paired-end
+SRR10229798	treated	paired-end
+SRR10229799	treated	paired-end
+SRR10229800	treated	paired-end
+SRR10229801	treated	paired-end
+SRR10229802	treated	paired-end
+SRR10229803	control	paired-end
+SRR10229804	control	paired-end
+SRR10229805	control	paired-end

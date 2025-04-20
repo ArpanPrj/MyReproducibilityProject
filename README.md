@@ -11,7 +11,7 @@ Each fungus gets its own little sandbox — the entire analysis is neatly compar
 
 ## Workflow Overview
 
-This RNA-seq pipeline is built as a stepwise, reproducible, and modular structure — from raw read downloads all the way to functional interpretations of differentially expressed genes.
+This RNA-seq pipeline is built as a stepwise and reproducible workflow — from raw read downloads all the way to functional interpretations of differentially expressed genes.
 
 ---
 
@@ -104,7 +104,7 @@ Everything in this pipeline was run on a Unix-based HPC setup. Here’s the tool
 | R            | 4.2.2    | Statistical computing and visualization |
 | Python       | 3.9      | Used for scripting various steps |
 
-> Tip: Most tools can be installed via `conda` or built from source.
+
 
 ---
 
