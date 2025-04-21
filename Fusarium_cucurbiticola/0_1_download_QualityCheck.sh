@@ -6,13 +6,11 @@ module load sra
 module load fastqc/0.10.1
 
 ##########  Define variables and make directories
-## Replace the numbers in the brackets with Your specific information
-  ## make variable for your ASC ID so the directories are automatically made in YOUR directory
-MyID=[1]          ## Example: MyID=aubtss
+MyID= aubaxp004          
 
   ## Make variable that represents YOUR working directory(WD) in scratch, your Raw data directory (DD) and the pre or postcleaned status (CS).
-DD=[2]   			## Example: DD=/scratch/${MyID}/PracticeRNAseq/RawData
-WD=[3]				## Example: WD=/scratch/${MyID}/PracticeRNAseq
+DD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/RawData 
+WD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola				
 RDQ=RawDataQuality
  
 ##  make the directories in SCRATCH for holding the raw data 
@@ -28,22 +26,19 @@ cd ${DD}
 	## -I 	Append read id after spot id as 'accession.spot.readid' on defline.
 	## splits the files into R1 and R2 (forward reads, reverse reads)
 
-## These samples are from Bioproject PRJNA437447. An experiment on Daphnia pulex, 5 samples on ad lib feed, 5 samples on caloric restriction diet
-## https://www.ncbi.nlm.nih.gov/bioproject?LinkName=sra_bioproject&from_uid=5206312
-## For class only do the 6 that you are assigned, delete the other 4 from this list
+## These samples are transcriptome of Fusarium cucurbiticola submitted to NCBI. This experiment has  6 samples on zucchini extract treated, 5 samples on sweet potato extract treated Fusarium RNA.
 
 vdb-config --interactive
 
-fastq-dump -F --split-files SRR6819014
-fastq-dump -F --split-files SRR6819015
-fastq-dump -F --split-files SRR6819016
-fastq-dump -F --split-files SRR6819017
-fastq-dump -F --split-files SRR6819018
-fastq-dump -F --split-files SRR6819019
-fastq-dump -F --split-files SRR6819020
-fastq-dump -F --split-files SRR6819021
-fastq-dump -F --split-files SRR6819022
-fastq-dump -F --split-files SRR6819023
+fastq-dump -F --split-files SRR10229803
+fastq-dump -F --split-files SRR10229805
+fastq-dump -F --split-files SRR10229797 
+fastq-dump -F --split-files SRR10229798
+fastq-dump -F --split-files SRR10229799
+fastq-dump -F --split-files SRR10229800
+fastq-dump -F --split-files SRR10229801
+fastq-dump -F --split-files SRR10229802
+fastq-dump -F --split-files SRR10229804
 
 ##### Extra ####
 ## If you are downloading data from a sequencing company instead of NCBI, using wget for example, then calculate the md5sum values of all the files in the folder (./*), and read into a text file.

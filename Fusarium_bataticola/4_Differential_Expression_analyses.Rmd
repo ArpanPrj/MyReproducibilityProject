@@ -30,7 +30,6 @@ library(DESeq2)
 library(ggplot2)
 library(ggrepel)
 library(pheatmap)
-library(RColorBrewer)
 library(ggpubr)
 ```
 
