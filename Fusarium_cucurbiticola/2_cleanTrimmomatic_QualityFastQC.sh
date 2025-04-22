@@ -12,12 +12,10 @@ module load trimmomatic/0.39
 module load fastqc/0.10.1
 
 ##########  Define variables and make directories
-MyID= aubaxp004          
-
   ## Make variable that represents YOUR working directory(WD) in scratch, your Raw data directory (DD) and the pre or postcleaned status (CS).
-DD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/RawData 
-WD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola                              
-CD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/CleanData
+DD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/RawData 
+WD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola                              
+CD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/CleanData
 PCQ=PostCleanQuality
 adapters=AdaptersToTrim_All.fa  ## This is a fasta file that has a list of adapters commonly used in NGS sequencing. 
 				## In the future, for your data, you will likely need to edit this for other projects based on how your libraries 

@@ -6,11 +6,13 @@ module load sra
 module load fastqc/0.10.1
 
 ##########  Define variables and make directories
-MyID= aubaxp004          
+## Replace the numbers in the brackets with Your specific information
+  ## make variable for your ASC ID so the directories are automatically made in YOUR directory
+     
 
   ## Make variable that represents YOUR working directory(WD) in scratch, your Raw data directory (DD) and the pre or postcleaned status (CS).
-DD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/RawData 
-WD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola				
+DD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/RawData 
+WD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola				
 RDQ=RawDataQuality
  
 ##  make the directories in SCRATCH for holding the raw data 

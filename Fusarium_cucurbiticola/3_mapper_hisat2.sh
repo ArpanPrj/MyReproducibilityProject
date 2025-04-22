@@ -21,13 +21,13 @@ set -x
 MyID= aubaxp004          
 
   ## Make variable that represents YOUR working directory(WD) in scratch, your Raw data directory (DD) and the pre or postcleaned status (CS).
-DD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/RawData 
-WD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola                              
-CD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/CleanData
-REFD=/scratch/${MyID}/Reproducibility/Fusarium_cucurbiticola/References   
-MAPD=/scratch/$MyID/Reproducibility/Fusarium_cucurbiticola/Map_Hisat2           
-COUNTSD=/scratch/$MyID/Reproducibility/Fusarium_cucurbiticola/Counts_StringTie       
-RESULTSD=/home/$MyID/Reproducibility/Fusarium_cucurbiticola/Counts_H_S          
+DD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/RawData 
+WD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola                              
+CD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/CleanData
+REFD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/References   
+MAPD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/Map_Hisat2           
+COUNTSD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/Counts_StringTie       
+RESULTSD=/scratch/aubaxp004/Reproducibility/Fusarium_cucurbiticola/Counts_H_S          
 
 REF=F10                   ## This is what the "easy name" will be for the genome reference
 

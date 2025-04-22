@@ -5,12 +5,11 @@ source /apps/profiles/modules_asax.sh.dyn
 module load sra
 module load fastqc/0.10.1
 
-##########  Define variables and make directories
-MyID= aubaxp004          
+##########  Define variables and make directories       
 
   ## Make variable that represents YOUR working directory(WD) in scratch, your Raw data directory (DD) and the pre or postcleaned status (CS).
-DD=/scratch/${MyID}/Reproducibility/Fusarium_bataticola/RawData 
-WD=/scratch/${MyID}/Reproducibility/Fusarium_bataticola				
+DD=/scratch/aubaxp004/Reproducibility/Fusarium_bataticola/RawData 
+WD=/scratch/aubaxp004/Reproducibility/Fusarium_bataticola				
 RDQ=RawDataQuality
  
 ##  make the directories in SCRATCH for holding the raw data 
