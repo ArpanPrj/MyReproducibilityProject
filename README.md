@@ -106,8 +106,6 @@ The gene count matrix (for [cucurbiticola](Fusarium_cucurbiticola/gene_count_mat
 - These counts reflect gene expression levels prior to any normalization.
 - This matrix serves as the direct input for **differential expression analysis**, typically processed using tools such as **DESeq2** or **edgeR**.
 
-This format allows for robust downstream statistical modeling to identify differentially expressed genes across treatment conditions.
-
 ---
 
 ### Differential Expression Analysis
