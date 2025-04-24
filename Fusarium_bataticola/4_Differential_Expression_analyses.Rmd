@@ -25,7 +25,7 @@ We begin by ensuring all required libraries are installed and loaded. These incl
 #install.packages("ggrepel")
 #install.packages("pheatmap")
 #install.packages("ggplot2")
-
+library(RColorBrewer)
 library(DESeq2)
 library(ggplot2)
 library(ggrepel)
@@ -130,7 +130,7 @@ for (i in 1:10) {
   plots[[i]] <- p
 }
 
-plotcounts<- ggarrange(plotlist = plots, ncol = 4, nrow = 3, common.legend=T)
+plotcounts<- ggarrange(plotlist = plots, ncol = 4, nrow = 3, common.legend=T,legend=bottom)
 
 
 plotcounts
