@@ -155,6 +155,8 @@ Everything in this pipeline was run on HPC setup followed by Rstudio. Here’s t
 
 If this pipeline helps your research, please cite this repository in your work. For questions, bugs, or collaborations, feel free to reach out to the maintainer.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15278270.svg)](https://doi.org/10.5281/zenodo.15278270)
+
 ## File organization
 
 ```
