@@ -2,11 +2,11 @@
 title: "Differential Expression Analysis using DESeq2"
 author: "Arpan Parajuli"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
 ---
 
 # Introduction
@@ -130,7 +130,7 @@ for (i in 1:10) {
   plots[[i]] <- p
 }
 
-plotcounts<- ggarrange(plotlist = plots, ncol = 4, nrow = 3, common.legend=T,legend=bottom)
+plotcounts<- ggarrange(plotlist = plots, ncol = 4, nrow = 3, common.legend=T,legend="bottom")
 
 
 plotcounts
