@@ -153,9 +153,11 @@ Everything in this pipeline was run on HPC setup followed by Rstudio. Here’s t
 
 ## Citation and Contact
 
-If this pipeline helps your research, please cite this repository in your work. For questions, bugs, or collaborations, feel free to reach out to the maintainer.
+Please cite this repository if you use this pipeline in your research.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15278270.svg)](https://doi.org/10.5281/zenodo.15278270)
+
+For more information and queries, please [EMAIL😁](azp0208@auburn.edu)
 
 ## File organization
 
