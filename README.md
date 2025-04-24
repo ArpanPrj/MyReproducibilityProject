@@ -111,7 +111,7 @@ This format allows for robust downstream statistical modeling to identify differ
 ---
 
 ### Differential Expression Analysis
-
+**Note:** *The gene count matrix data obtained from prepDE.py is used as input data for the analysis*
 With count data in hand, we jump into R to perform statistical analysis using **DESeq2 (v1.38.3)**. Here's what happens:
 
 - Raw counts are normalized to account for differences in library size and sequencing depth.
