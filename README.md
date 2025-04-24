@@ -157,7 +157,7 @@ Please cite this repository if you use this pipeline in your research.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15278270.svg)](https://doi.org/10.5281/zenodo.15278270)
 
-For more information and queries, please [EMAIL😁](azp0208@auburn.edu)
+For more information and queries, please [e-mail 📧](azp0208@auburn.edu)
 
 ## File organization
 
