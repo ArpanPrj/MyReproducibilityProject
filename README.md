@@ -112,6 +112,7 @@ This format allows for robust downstream statistical modeling to identify differ
 
 ### Differential Expression Analysis
 **Note:** *The gene count matrix data obtained from prepDE.py is used as input data for the analysis*
+
 With count data in hand, we jump into R to perform statistical analysis using **DESeq2 (v1.38.3)**. Here's what happens:
 
 - Raw counts are normalized to account for differences in library size and sequencing depth.
@@ -148,17 +149,52 @@ Everything in this pipeline was run on HPC setup followed by Rstudio. Here’s t
 | Python       | [3.10.8](https://www.python.org/downloads/release/python-3108/) | Used for scripting various steps |
 
 
-
----
-
-## Notes
-
-- The project is built with reproducibility in mind, adhering to FAIR principles.
-- It’s modular, version-controlled, and easy to extend.
-- Each script is prefixed and named according to the step number, so they’re always in logical order.
-
 ---
 
 ## Citation and Contact
 
 If this pipeline helps your research, please cite this repository in your work. For questions, bugs, or collaborations, feel free to reach out to the maintainer.
+
+## File organization
+
+```
+├── Fusarium_bataticola
+│   ├── 0_1_download_QualityCheck.sh                #shell script to download Fusarium bataticola transcriptome data and check their quality
+│   ├── 2_cleanTrimmomatic_QualityFastQC.sh         #shell script to trim adapters and low quality reads and check quality of the trimmed reads
+│   ├── 3_mapper_hisat2.sh                          #shell script to map the clean reads to the reference of F. bataticola and quantify the mapped reads
+│   ├── 4_Differential_Expression_analyses.html     #html file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses.md       #github flavoured markdown file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses.Rmd      #markdown file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses_files
+│   │   └── figure-gfm
+│   │       ├── heatmap-var-1.png
+│   │       ├── pca-1.png
+│   │       ├── plot-counts-1.png
+│   │       ├── sample-distance-1.png
+│   │       └── volcano-plot-ggplot2-1.png
+│   ├── DGESeq_results.csv                          #csv file which is output file containing the differentially expressed gene data
+│   ├── gene_count_matrix.csv                       #csv file which is output file from prepDE.py
+│   ├── PHENO_DATA.txt                              #txt file describing each read file
+│   └── prepDE.py3                                  #pythn script to summarize gene-level expression data for each sample, extracted from the transcript assembly output of StringTie
+├── Fusarium_cucurbiticola
+│   ├── 0_1_download_QualityCheck.sh                #shell script to download Fusarium cucurbiticola transcriptome data and check their quality
+│   ├── 2_cleanTrimmomatic_QualityFastQC.sh         #shell script to trim adapters and low quality reads and check quality of the trimmed reads
+│   ├── 3_mapper_hisat2.sh                          #shell script to map the clean reads to the reference of F. cucurbiticola and quantify the mapped reads
+│   ├── 4_Differential_Expression_analyses.html     #html file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses.md       #github flavoured markdown file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses.Rmd      #markdown file with R-script Differential Expression Analysis
+│   ├── 4_Differential_Expression_analyses_files
+│   │   └── figure-gfm
+│   │       ├── heatmap-var-1.png
+│   │       ├── pca-1.png
+│   │       ├── plot-counts-1.png
+│   │       ├── sample-distance-1.png
+│   │       └── volcano-plot-ggplot2-1.png
+│   ├── DGESeq_results.csv                          #csv file which is output file containing the differentially expressed gene data
+│   ├── gene_count_matrix.csv                       #csv file which is output file from prepDE.py
+│   ├── PHENO_DATA.txt                              #txt file describing each read file
+│   └── prepDE.py3                                  #pythn script to summarize gene-level expression data for each sample, extracted from the transcript assembly output of StringTie
+├── MyReproducibilityProject.Rproj                  #R project .proj file
+├── README.html
+└── README.md                                       #Readme file of the project
+```
